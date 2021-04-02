@@ -28,7 +28,15 @@ const ControlBox = () => {
   const [date, setDate] = useState(null);
 
   // effects
-  useEffect(() => setCountries(state.countries), [state]);
+  useEffect(() => {
+    setCountries(
+      state.countries.sort((a, b) => {
+        if (a.Country < b.Country) return -1;
+        if (a.Country > b.Country) return 1;
+        return 0;
+      })
+    );
+  }, [state]);
 
   useEffect(() => {
     axios
@@ -51,6 +59,7 @@ const ControlBox = () => {
     const allData = state.data;
     if (allData) {
       const time = allData[allData.length - 1]?.Date;
+      if (!time) return setDate("Unknown");
       const date = new Date(time);
       let day = date.toLocaleDateString("en-US").split("/")[1];
       let year = date.toLocaleDateString("en-US").split("/")[2];

@@ -31,7 +31,10 @@ export default function Item(props) {
       const lastBeforeDataItem = data[data.length - 2];
 
       return {
-        last: lastDataItem?.[key] - lastBeforeDataItem?.[key],
+        last:
+          lastDataItem?.[key] > lastBeforeDataItem?.[key]
+            ? lastDataItem?.[key] - lastBeforeDataItem?.[key]
+            : 0,
         total: lastDataItem?.[key],
       };
     };
@@ -64,7 +67,9 @@ export default function Item(props) {
                   24 Hours
                 </h3>
                 <Divider className={classes.divider} />
-                <h6 className={classes.counter}>{count.last}</h6>
+                <h6 className={classes.counter}>
+                  {count.last ? count.last : 0}
+                </h6>
               </div>
             </Grid>
             <Grid item md={6}>
@@ -76,7 +81,9 @@ export default function Item(props) {
                   Total
                 </h3>
                 <Divider className={classes.divider} />
-                <h6 className={classes.counter}>{count.total}</h6>
+                <h6 className={classes.counter}>
+                  {count.total ? count.total : 0}
+                </h6>
               </div>
             </Grid>
           </Grid>
